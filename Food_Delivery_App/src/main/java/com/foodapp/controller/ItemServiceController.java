@@ -1,6 +1,6 @@
 package com.foodapp.controller;
 
-import java.io.IOException;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,18 +12,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
+
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.MediaType;
+
 
 
 import com.foodapp.exceptions.ItemException;
 import com.foodapp.model.Item;
 import com.foodapp.service.ItemService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/item")
@@ -32,17 +31,6 @@ public class ItemServiceController {
 	@Autowired
 	ItemService itemService;
 
-	/*@ResponseStatus(value = HttpStatus.OK)
-	@PostMapping("/upload")
-	public void uploadImage(@RequestParam("productImage")MultipartFile file) throws IOException{
-		Item.uploadImage(file);
-	}
-	
-	@GetMapping("/download/{fileName}")
-	public ResponseEntity<byte[]> downloadImage(@PathVariable String fileName) throws IOException {
-		byte[] image = itemService.downloadImage(fileName);
-		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.valueOf("image/png")).body(image);
-	}*/
 	
 	
 	@PostMapping("/add")
@@ -76,4 +64,6 @@ public class ItemServiceController {
 		return new ResponseEntity<List<Item>>(items, HttpStatus.OK);
 		
 	}
+
+	
 }
