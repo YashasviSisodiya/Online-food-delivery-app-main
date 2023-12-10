@@ -1,13 +1,17 @@
 package com.foodapp.model;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,7 +30,9 @@ public class Item{
 	private Integer itemId;
 	private String itemName;
 	private Double cost;
-	private String image;
+	@Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] image;
 
 
 
