@@ -24,11 +24,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-public class FoodCart {
+public class Cart {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer cartId;
+	private Integer id;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JsonIgnore
@@ -37,6 +37,8 @@ public class FoodCart {
 	
 	@OneToMany(targetEntity = Item.class,cascade = CascadeType.ALL)
 	private List<Item> itemList;
+
+	private Boolean paid;
 
 
 

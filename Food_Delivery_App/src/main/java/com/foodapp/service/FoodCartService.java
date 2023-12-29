@@ -2,16 +2,16 @@ package com.foodapp.service;
 
 import com.foodapp.exceptions.CartException;
 import com.foodapp.exceptions.ItemException;
-import com.foodapp.model.FoodCart;
+import com.foodapp.model.Cart;
 
 public interface FoodCartService {
 	
-	public FoodCart saveCart(FoodCart cart)throws CartException;
+	public Cart saveCart(Cart cart)throws CartException;
 	
-	public FoodCart addItem(Integer cartId, Integer itemId)throws CartException,ItemException;
+	public Cart addItem(Integer cartId, Integer itemId)throws CartException,ItemException;
 	
-	public FoodCart clearCart(Integer cartId)throws CartException;
+	public Cart clearCart(Integer cartId)throws CartException;
 	
-	public FoodCart viewCart(Integer cartId)throws CartException;
+	public Cart viewCart(Integer cartId)throws CartException;
 
 }

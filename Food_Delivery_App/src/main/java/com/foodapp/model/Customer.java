@@ -34,9 +34,6 @@ public class Customer {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
 	
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JsonIgnore
-	private FoodCart foodCart;
+
 }
 
