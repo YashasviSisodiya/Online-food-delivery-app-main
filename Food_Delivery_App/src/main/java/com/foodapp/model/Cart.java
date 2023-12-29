@@ -33,12 +33,10 @@ public class Cart {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Customer customer;
 
-	@OneToMany
-	private List<CartItem> cartItems;
 	
-//
-//	@OneToMany(targetEntity = Item.class,cascade = CascadeType.ALL)
-//	private List<Item> itemList;
+
+	@OneToMany(targetEntity = CartItem.class,cascade = CascadeType.ALL)
+	private List<CartItem> cartItems;
 
 	private Boolean paid;
 

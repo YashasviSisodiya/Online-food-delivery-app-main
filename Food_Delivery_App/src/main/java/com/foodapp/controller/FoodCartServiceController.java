@@ -52,14 +52,9 @@ public class FoodCartServiceController {
 	
 	
 	@GetMapping("/view/{cartId}")
-	public Cart getCartByCartId(@PathVariable ("cartId") Integer cartId,@RequestParam String key) throws AuthorizationException, CartException{
+	public Cart getCartByCartId(@PathVariable ("cartId") Integer cartId) throws AuthorizationException, CartException{
 		
-		Integer sessionId = userSessionService.getUserSessionId(key);
-		if(sessionId != null)
-			return cartService.viewCart(cartId);
-		else
-			 throw new CartException();
-			
+		return cartService.viewCart(cartId);
 	}
 
 }

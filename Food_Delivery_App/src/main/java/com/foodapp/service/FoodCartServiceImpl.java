@@ -17,11 +17,15 @@ import com.foodapp.exceptions.ItemException;
 import com.foodapp.model.Cart;
 import com.foodapp.model.Item;
 import com.foodapp.repository.CartDAO;
+import com.foodapp.repository.CartItemDAO;
 import com.foodapp.repository.ItemDAO;
 
 @Service
 public class FoodCartServiceImpl implements FoodCartService{
 	
+	@Autowired
+	CartItemDAO cartItemDAO;
+
 	@Autowired
 	CartDAO cartDAO;
 
@@ -66,7 +70,7 @@ public class FoodCartServiceImpl implements FoodCartService{
 			cart = new Cart();
 			cart.setCustomer(customer);
 			cart.setPaid(false);
-			cart.setCartItems(new ArrayList<>());
+			//cart.setCartItems(new ArrayList<>());
 			cartDAO.save(cart);
 		} else {
 			cart = cartOptional.get();
@@ -80,8 +84,8 @@ public class FoodCartServiceImpl implements FoodCartService{
 			newCartItem.setItem(item);
 			newCartItem.setQuantity(quantity);
 
-			cart.getCartItems().add(newCartItem);
-
+			cartItemDAO.save(newCartItem);
+			//cart.setCartItems();
 			return cart;
 
 		}else {
