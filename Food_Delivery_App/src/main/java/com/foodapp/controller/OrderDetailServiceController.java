@@ -1,5 +1,6 @@
 package com.foodapp.controller;
 
+import com.foodapp.model.Cart;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,12 +88,12 @@ public class OrderDetailServiceController {
 	 
 	 
 	 @GetMapping("/viewbycustomer/{customerId}")
-     public ResponseEntity<List<Item>> viewAllOrders(@PathVariable("customerId") Integer customerId,@RequestParam String key) throws OrderException, CustomerException, AuthorizationException{
+     public ResponseEntity<List<Cart>> viewAllOrders(@PathVariable("customerId") Integer customerId, @RequestParam String key) throws OrderException, CustomerException, AuthorizationException{
      	
      	Integer sessionId = userSessionService.getUserSessionId(key);
      	
      	if(sessionId != null)
-     		return  new ResponseEntity<List<Item>>(orderService.viewAllOrdersByCustomer(customerId), HttpStatus.FOUND);
+     		return  new ResponseEntity<>(orderService.viewAllOrdersByCustomer(customerId), HttpStatus.FOUND);
      	else
      		throw new OrderException();
      }

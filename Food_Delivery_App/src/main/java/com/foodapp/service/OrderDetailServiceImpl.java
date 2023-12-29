@@ -1,5 +1,7 @@
 package com.foodapp.service;
 
+import com.foodapp.model.Cart;
+import com.foodapp.repository.CartDAO;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.foodapp.exceptions.CustomerException;
 import com.foodapp.exceptions.OrderException;
 import com.foodapp.model.Customer;
-import com.foodapp.model.Item;
 import com.foodapp.model.OrderDetails;
 import com.foodapp.repository.CustomerDAO;
 import com.foodapp.repository.OrderDAO;
@@ -23,6 +24,9 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 	
 	@Autowired
 	CustomerDAO cusDAO;
+
+	@Autowired
+	CartDAO cartDAO;
 
 	
 	
@@ -78,16 +82,12 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 
 
 	@Override
-	public List<Item> viewAllOrdersByCustomer(Integer customerId) throws OrderException, CustomerException {
+	public List<Cart> viewAllOrdersByCustomer(Integer customerId) throws OrderException, CustomerException {
 		Optional<Customer> cOpt =cusDAO.findById(customerId);
 		if(cOpt.isPresent()) {
 			Customer customer = cOpt.get();
-			 List<Item> itemList = customer.getFoodCart().getItemList();
-			 if(itemList.size() > 0) {
-				 return itemList;
-			 }else {
-				 throw new OrderException("No Orders found..");
-			 }
+			List<Cart> cartList = cartDAO.findAllByCustomerIdAndPaidTrue(customerId);
+			 return cartList;
 		}else {
 			throw new CustomerException("No Customer found with ID: "+customerId);
 		}

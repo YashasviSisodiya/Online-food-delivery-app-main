@@ -1,5 +1,6 @@
 package com.foodapp.controller;
 
+import com.foodapp.exceptions.CustomerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,9 +35,11 @@ public class FoodCartServiceController {
 
 	
 	
-	@PutMapping("/add/{cartId}/{itemId}")
-	public ResponseEntity<Cart> addItemToCart(@PathVariable("cartId") Integer cartId, @PathVariable("itemId") Integer itemId) throws CartException, ItemException{
-		Cart updatedCart = cartService.addItem(cartId, itemId);
+	@PutMapping("/add/{customerId}/{itemId}/{quantity}")
+	public ResponseEntity<Cart> addItemToCart(@PathVariable("customerId") Integer customerId,
+											  @PathVariable("itemId") Integer itemId,
+											  @PathVariable("quantity") Integer quantity) throws CartException, ItemException, CustomerException {
+		Cart updatedCart = cartService.addItem(customerId, itemId, quantity);
 		return new ResponseEntity<Cart>(updatedCart, HttpStatus.ACCEPTED);
 	}
 	
@@ -44,7 +47,7 @@ public class FoodCartServiceController {
 	@DeleteMapping("/remove/{cartId}")
 	public ResponseEntity<Cart> removeCart(@PathVariable("cartId") Integer cartId) throws CartException{
 		Cart removedCart = cartService.clearCart(cartId);
-		return new ResponseEntity<Cart>(removedCart, HttpStatus.OK);
+		return new ResponseEntity<>(removedCart, HttpStatus.OK);
 	}
 	
 	

@@ -31,12 +31,14 @@ public class Cart {
 	private Integer id;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JsonIgnore
 	private Customer customer;
+
+	@OneToMany
+	private List<CartItem> cartItems;
 	
-	
-	@OneToMany(targetEntity = Item.class,cascade = CascadeType.ALL)
-	private List<Item> itemList;
+//
+//	@OneToMany(targetEntity = Item.class,cascade = CascadeType.ALL)
+//	private List<Item> itemList;
 
 	private Boolean paid;
 

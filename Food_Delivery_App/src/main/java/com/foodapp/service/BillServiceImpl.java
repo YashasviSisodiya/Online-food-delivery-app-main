@@ -1,5 +1,6 @@
 package com.foodapp.service;
 
+import com.foodapp.repository.CartDAO;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,9 @@ public class BillServiceImpl implements BillService{
 	
 	@Autowired
 	CustomerDAO cusDAO;
+
+	@Autowired
+	CartDAO cartDAO;
 
 	
 	
@@ -78,24 +82,26 @@ public class BillServiceImpl implements BillService{
 		Optional<Customer> cOpt = cusDAO.findById(customerId);
 		if(cOpt.isPresent()) {
 			Customer customer = cOpt.get();
-			List<Item> items = customer.getFoodCart().getItemList();
-			
-			if(items.size() > 0) {
-				
-				Double total = 0.0;
-				for(Item item : items) {
-					total += (item.getCost()*item.getQuantity()); 
-				}
-				
-				return "The total bill for "+customer.getFullName()+" is "+total;
-				
-			}else {
-				throw new ItemException("No order items found for "+customer.getFullName());
-			}
-			
-		}else {
-			throw new CustomerException("No Customer found with ID: "+customerId);
+//
+//			List<Item> items = customer.getFoodCart().getItemList();
+//
+//			if(items.size() > 0) {
+//
+//				Double total = 0.0;
+//				for(Item item : items) {
+//					total += (item.getCost()*item.getQuantity());
+//				}
+//
+//				return "The total bill for "+customer.getFullName()+" is "+total;
+//
+//			}else {
+//				throw new ItemException("No order items found for "+customer.getFullName());
+//			}
+//
+//		}else {
+//			throw new CustomerException("No Customer found with ID: "+customerId);
 		}
+		return null;
 	}
 
 	

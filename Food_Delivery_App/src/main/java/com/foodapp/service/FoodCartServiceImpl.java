@@ -1,5 +1,9 @@
 package com.foodapp.service;
 
+import com.foodapp.exceptions.CustomerException;
+import com.foodapp.model.CartItem;
+import com.foodapp.model.Customer;
+import com.foodapp.repository.CustomerDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,28 +16,20 @@ import com.foodapp.exceptions.CartException;
 import com.foodapp.exceptions.ItemException;
 import com.foodapp.model.Cart;
 import com.foodapp.model.Item;
-import com.foodapp.repository.FoodCartDAO;
+import com.foodapp.repository.CartDAO;
 import com.foodapp.repository.ItemDAO;
 
 @Service
 public class FoodCartServiceImpl implements FoodCartService{
 	
 	@Autowired
-	FoodCartDAO cartDAO;
+	CartDAO cartDAO;
+
+	@Autowired
+	CustomerDAO customerDAO;
 
 	@Autowired
 	ItemDAO itemDAO;
-	
-	
-	@Override
-	public Cart saveCart(Cart cart) throws CartException {
-		Optional<Cart> opt = cartDAO.findById(cart.getCartId());
-		if(opt.isPresent()) {
-			throw new CartException("Cart already exists..");
-		}else {
-			 return cartDAO.save(cart);
-		}
-	}
 
 
 	@Override
@@ -62,28 +58,34 @@ public class FoodCartServiceImpl implements FoodCartService{
 
 
 	@Override
-	public Cart addItem(Integer cartId, Integer itemId) throws CartException, ItemException {
-		Optional<Cart> cOpt = cartDAO.findById(cartId);
-		if(cOpt.isPresent()) {
-			
-			Optional<Item> iOpt = itemDAO.findById(itemId);
-			if(iOpt.isPresent()) {
-				
-				Cart cart = cOpt.get();
-				Item item = iOpt.get();
-				List<Item> list = new ArrayList<>();
-				list.addAll(cart.getItemList());
-				list.add(item);
-				cart.setItemList(list);
-				
-				return cart;
-				
-			}else {
-				throw new ItemException("No Item found with ID: "+itemId);
-			}
-			
+	public Cart addItem(Integer customerId, Integer itemId, Integer quantity) throws CartException, ItemException, CustomerException {
+		Customer customer = customerDAO.findById(customerId).orElseThrow(() ->  new CustomerException("No Customer found with ID: "+customerId));
+		Optional<Cart> cartOptional = cartDAO.findAllByCustomerIdAndPaidFalse(customerId);
+		Cart cart;
+		if(!cartOptional.isPresent()){
+			cart = new Cart();
+			cart.setCustomer(customer);
+			cart.setPaid(false);
+			cart.setCartItems(new ArrayList<>());
+			cartDAO.save(cart);
+		} else {
+			cart = cartOptional.get();
+		}
+		Optional<Item> itemOptional = itemDAO.findById(itemId);
+		if(itemOptional.isPresent()) {
+			Item item = itemOptional.get();
+
+			CartItem newCartItem = new CartItem();
+			newCartItem.setCart(cart);
+			newCartItem.setItem(item);
+			newCartItem.setQuantity(quantity);
+
+			cart.getCartItems().add(newCartItem);
+
+			return cart;
+
 		}else {
-			throw new CartException("No Cart found with ID: "+cartId);
+			throw new ItemException("No Item found with ID: "+itemId);
 		}
 	}
 

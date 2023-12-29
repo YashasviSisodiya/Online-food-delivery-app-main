@@ -18,7 +18,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer addCustomer(Customer customer) throws CustomerException {
-		Optional<Customer> opt = customerDAO.findById(customer.getCustomerId());
+		Optional<Customer> opt = customerDAO.findById(customer.getId());
 		if(opt.isPresent()) {
 			throw new CustomerException("Customer already exists..");
 		}else {
@@ -29,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer updateCustomer(Customer customer) throws CustomerException {
-		Optional<Customer> opt = customerDAO.findById(customer.getCustomerId());
+		Optional<Customer> opt = customerDAO.findById(customer.getId());
 		if(opt.isPresent()) {
 			return customerDAO.save(customer);
 		}else {
