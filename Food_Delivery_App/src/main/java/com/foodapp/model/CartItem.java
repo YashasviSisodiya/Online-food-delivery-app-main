@@ -23,8 +23,8 @@ public class CartItem {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
-    @ManyToOne(targetEntity = Cart.class,cascade = CascadeType.ALL)
-	private Cart cart;
+    // @ManyToOne(targetEntity = Cart.class,cascade = CascadeType.ALL)
+	// private Cart cart;
 
     @ManyToOne(targetEntity = Item.class,cascade = CascadeType.ALL)
 	private Item item;

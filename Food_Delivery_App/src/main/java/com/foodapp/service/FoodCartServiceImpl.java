@@ -50,13 +50,13 @@ public class FoodCartServiceImpl implements FoodCartService{
 
 
 	@Override
-	public Cart viewCart(Integer cartId) throws CartException {
-		Optional<Cart> opt = cartDAO.findById(cartId);
+	public Cart viewCart(Integer customerId) throws CartException {
+		Optional<Cart> opt = cartDAO.findAllByCustomerIdAndPaidFalse(customerId);
 		if(opt.isPresent()) {
 			Cart cart = opt.get();
 			return cart;
 		}else {
-			throw new CartException("No Cart found with ID: "+cartId);
+			throw new CartException("No Cart found with ID: "+customerId);
 		}
 	}
 
@@ -70,7 +70,7 @@ public class FoodCartServiceImpl implements FoodCartService{
 			cart = new Cart();
 			cart.setCustomer(customer);
 			cart.setPaid(false);
-			//cart.setCartItems(new ArrayList<>());
+			cart.setCartItems(new ArrayList<>());
 			cartDAO.save(cart);
 		} else {
 			cart = cartOptional.get();
@@ -80,12 +80,14 @@ public class FoodCartServiceImpl implements FoodCartService{
 			Item item = itemOptional.get();
 
 			CartItem newCartItem = new CartItem();
-			newCartItem.setCart(cart);
+			//newCartItem.setCart(cart);
 			newCartItem.setItem(item);
 			newCartItem.setQuantity(quantity);
 
 			cartItemDAO.save(newCartItem);
-			//cart.setCartItems();
+			cart.getCartItems().add(newCartItem);
+			cartDAO.save(cart);
+			//cart.setCartItems(cartItemDAO.findAllByCartId(cart.getId()));
 			return cart;
 
 		}else {

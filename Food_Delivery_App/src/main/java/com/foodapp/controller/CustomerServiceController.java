@@ -26,7 +26,7 @@ public class CustomerServiceController {
 	
 	
 	@PostMapping("/add")
-	public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) throws CustomerException{
+	public ResponseEntity<Customer> addCustomer( @RequestBody Customer customer) throws CustomerException{
 		 Customer newCustomer = customerService.addCustomer(customer);
 		 return new ResponseEntity<Customer>(newCustomer, HttpStatus.CREATED);
 	}

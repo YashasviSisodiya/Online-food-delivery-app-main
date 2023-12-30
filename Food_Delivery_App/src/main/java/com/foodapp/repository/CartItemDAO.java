@@ -11,5 +11,5 @@ import com.foodapp.model.CartItem;
 
 @Repository
 public interface CartItemDAO extends JpaRepository<CartItem, Integer>{
-    List<CartItem> findAllByCartId(Integer cartId);
+    List<CartItem> findAll();
 }
