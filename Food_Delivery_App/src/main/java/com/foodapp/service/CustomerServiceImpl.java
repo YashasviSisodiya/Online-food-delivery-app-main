@@ -17,30 +17,30 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	CustomerDAO customerDAO;
 
-	@Override
-	public Customer addCustomer(Customer customer) throws CustomerException {
-			Customer newCustomer = new Customer();
-			newCustomer.setAge(20);
-			newCustomer.setEmail("abc@gmail.com");
-			newCustomer.setFullName("yashasvi");
-			newCustomer.setMobileNumber("123456789");
-			newCustomer.setGender("female");
-			newCustomer.setAddress(null);
+//	@Override
+//	public Customer addCustomer(Customer customer) throws CustomerException {
+//			Customer newCustomer = new Customer();
+//			newCustomer.setAge(20);
+//			newCustomer.setEmail("abc@gmail.com");
+//			newCustomer.setFullName("yashasvi");
+//			newCustomer.setMobileNumber("123456789");
+//			newCustomer.setGender("female");
+//			newCustomer.setAddress(null);
+//
+//			// Save the new customer to the database
+//			return customerDAO.save(newCustomer);
+//
+//	}
 
-			// Save the new customer to the database
-			return customerDAO.save(newCustomer);
-
-	}
-
-	// @Override
-	// public Customer addCustomer(Customer customer) throws CustomerException {
-	// Optional<Customer> opt = customerDAO.findById(customer.getId());
-	// if(opt.isPresent()) {
-	// throw new CustomerException("Customer already exists..");
-	// }else {
-	// return customerDAO.save(customer);
-	// }
-	// }
+	 @Override
+	 public Customer addCustomer(Customer customer) throws CustomerException {
+	 //Optional<Customer> opt = customerDAO.findById(customer.getId());
+	 if(customer.getId()==null) {
+	 return customerDAO.save(customer);
+	 }else{
+		 throw new CustomerException("Customer already exists");
+	 }
+	 }
 
 	@Override
 	public Customer updateCustomer(Customer customer) throws CustomerException {
