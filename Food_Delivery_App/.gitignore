@@ -1,0 +1,54 @@
+# Component testing.
+allure-results
+
+# Frontend development.
+.pnpm-debug.log*
+.vscode
+dist
+lerna-debug.log*
+node
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.code-workspace
+*.log
+**/.npmrc
+**/webapp/coverage
+**/webapp/mock-server/**/*.js
+**/webapp/mock-server/**/*.js.map
+
+# General development.
+.DS_Store
+*.swp
+
+# Java development.
+.attach_pid*
+.classpath
+.factorypath
+.idea
+.java-version
+.project
+.run
+.settings
+target
+*.iml
+
+# Jsonnet development.
+out
+vendor
+
+# Python development.
+.pydevproject
+__pycache__
+venv
+*.pyc
+*.pyo
+
+# Terraform development and deployment.
+.terraform
+*.tfplan
+*.tfstate
+*.tfstate.backup
+*.tfstate.*.backup
+*.tfvars
