@@ -1,13 +1,13 @@
 package com.foodapp.service;
 
-import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.foodapp.exceptions.CustomerException;
-import com.foodapp.model.Cart;
 import com.foodapp.model.Customer;
 import com.foodapp.repository.CustomerDAO;
 
@@ -41,6 +41,45 @@ public class CustomerServiceImpl implements CustomerService {
 		 throw new CustomerException("Customer already exists");
 	 }
 	 }
+
+	@Override
+	public Customer login(String userName, String password) throws CustomerException {
+
+		Optional<Customer> opt= customerDAO.findByUserName(userName);
+		Customer customer;
+		if(opt.isPresent()){
+			customer=opt.get();
+			if(Objects.equals(customer.getPassword(), password)){
+				customer.setUuid(UUID.randomUUID());
+				return customerDAO.save(customer);
+			}
+			else{
+				throw new CustomerException("Password not match");
+			}
+		}
+		else{
+			throw new CustomerException("User does not exist");
+		}
+	}
+
+	@Override
+	public Customer logout(UUID uuid) throws CustomerException {
+
+		Optional<Customer> opt= customerDAO.findByUuid(uuid);
+		Customer customer;
+		if(opt.isPresent()){
+			customer=opt.get();
+				customer.setUuid(null);
+				return customerDAO.save(customer);
+		}
+		else{
+			throw new CustomerException("Enter correct UUID");
+		}
+	}
+
+
+
+
 
 	@Override
 	public Customer updateCustomer(Customer customer) throws CustomerException {

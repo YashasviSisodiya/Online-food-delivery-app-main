@@ -1,5 +1,6 @@
 package com.foodapp.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -30,4 +31,5 @@ public class CartItem {
 	private Item item;
 
     private Integer quantity;
+
 }

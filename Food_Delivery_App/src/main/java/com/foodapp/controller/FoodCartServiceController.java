@@ -7,10 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foodapp.authexceptions.AuthorizationException;
@@ -19,8 +17,6 @@ import com.foodapp.exceptions.CartException;
 import com.foodapp.exceptions.ItemException;
 import com.foodapp.model.Cart;
 import com.foodapp.service.FoodCartService;
-
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping("/cart")
@@ -55,6 +51,19 @@ public class FoodCartServiceController {
 	public Cart getCartByCartId(@PathVariable ("cartId") Integer cartId) throws AuthorizationException, CartException{
 		
 		return cartService.viewCart(cartId);
+	}
+
+	@PutMapping("/checkOut/{customerId}")
+	public ResponseEntity<Cart> checkout(@PathVariable("customerId") Integer customerId) throws CartException {
+		Cart check = cartService.checkOut(customerId);
+		return new ResponseEntity<Cart>(check, HttpStatus.ACCEPTED);
+
+	}
+
+	@GetMapping("/total/{customerId}/totalPrice")
+	public ResponseEntity<Double> getTotalCartPrice(@PathVariable ("customerId") Integer customerId) throws CartException {
+		double totalCartPrice = cartService.total(customerId);
+		return new ResponseEntity<>(totalCartPrice, HttpStatus.OK);
 	}
 
 }

@@ -10,7 +10,8 @@ import com.foodapp.model.Cart;
 
 @Repository
 public interface CartDAO extends JpaRepository<Cart, Integer>{
-    Optional<Cart> findAllByCustomerIdAndPaidFalse(Integer customerId);
+    Optional<Cart> findByCustomerIdAndPaidFalse(Integer customerId);
 
     List<Cart> findAllByCustomerIdAndPaidTrue(Integer customerId);
 }
+

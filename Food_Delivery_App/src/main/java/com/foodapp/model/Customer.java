@@ -1,15 +1,14 @@
 package com.foodapp.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,6 +24,12 @@ public class Customer {
 	private String gender;
 	private String mobileNumber;
 	private String email;
+
+	@Column(unique=true)
+	private String userName;
+	private String password;
+
+	private UUID uuid;
 	
 	@OneToOne(targetEntity = Address.class, cascade = CascadeType.ALL)
 	private Address address;

@@ -12,12 +12,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 public class LogInModel {
-	
-	@Id
-	@NotNull
-	private Integer userId;
+
 	
 	private String userName;
 	private String password;

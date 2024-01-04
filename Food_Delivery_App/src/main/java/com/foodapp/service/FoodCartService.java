@@ -13,4 +13,8 @@ public interface FoodCartService {
 	
 	public Cart viewCart(Integer cartId)throws CartException;
 
+	public Cart checkOut(Integer CustomerId)throws CartException;
+
+	public Double total(Integer CustomerId)throws CartException;
+
 }

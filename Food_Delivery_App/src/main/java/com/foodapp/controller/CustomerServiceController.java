@@ -1,21 +1,18 @@
 package com.foodapp.controller;
 
+import com.foodapp.authmodels.LogInModel;
+import com.foodapp.exceptions.CartException;
+import com.foodapp.exceptions.ItemException;
+import com.foodapp.model.Cart;
+import com.foodapp.model.custom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.foodapp.exceptions.CustomerException;
 import com.foodapp.model.Customer;
 import com.foodapp.service.CustomerService;
-
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping("/customer")
@@ -37,6 +34,21 @@ public class CustomerServiceController {
 		 Customer updatedCustomer = customerService.updateCustomer(customer);
 		 return new ResponseEntity<Customer>(updatedCustomer, HttpStatus.ACCEPTED);
 	}
+
+
+	@PutMapping("/login")
+	public ResponseEntity<Customer> loginCustomer(@RequestBody LogInModel logInModel) throws CustomerException {
+		Customer loginCustomer = customerService.login(logInModel.getUserName(), logInModel.getPassword());
+		return new ResponseEntity<Customer>(loginCustomer, HttpStatus.ACCEPTED);
+	}
+
+	@PutMapping("/logout")
+	public ResponseEntity<Customer> logoutCustomer(@RequestBody custom uu) throws CustomerException {
+		Customer logoutCustomer = customerService.logout(uu.getUuid());
+		return new ResponseEntity<Customer>(logoutCustomer, HttpStatus.ACCEPTED);
+	}
+
+
 	
 	
 	@DeleteMapping("/remove/{customerId}")
